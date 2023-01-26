@@ -26,7 +26,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var cMinorLabel: UILabel!
     @IBOutlet weak var cProximity: UILabel!
     
+    @IBOutlet weak var checkMonitoring: UILabel!
+    @IBOutlet weak var checkRegion: UILabel!
+    
     private var locationManger: CLLocationManager?
+    private var beaconRegions: [CLBeaconRegion] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +56,54 @@ extension ViewController: CLLocationManagerDelegate {
             
         @unknown default:
             break
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+        print("DidStartMonitoring")
+        self.checkMonitoring.text = "DidStartMonitoring"
+        
+        self.beaconRegions.forEach {
+            self.locationManger?.requestState(for: $0)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+        print("DidDetermineState")
+        
+        switch state {
+        case .unknown:
+            NSLog("Unknown determine state")
+            self.checkMonitoring.text = "Unknown determine state"
+            
+        case .inside:
+            self.checkMonitoring.text = "Inside determine state"
+            
+            self.beaconRegions.forEach {
+                self.locationManger?.startRangingBeacons(satisfying: $0.beaconIdentityConstraint)
+            }
+            
+        case .outside:
+            NSLog("Outside determine state")
+            self.checkMonitoring.text = "Outside determine state"
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("DidEnterRegion")
+        self.checkRegion.text = "DidEnterRegion"
+        
+        self.beaconRegions.forEach {
+            self.locationManger?.startRangingBeacons(satisfying: $0.beaconIdentityConstraint)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        print("DidExitRegion")
+        self.checkRegion.text = "DidExitRegion"
+        
+        self.beaconRegions.forEach {
+            self.locationManger?.stopRangingBeacons(satisfying: $0.beaconIdentityConstraint)
         }
     }
     
@@ -130,17 +182,19 @@ private extension ViewController {
 //        let beaconRegion: CLBeaconRegion = .init(uuid: uuid, major: major, minor: minor, identifier: "MyBeacon")
 //        let beaconIdentityConstraint: CLBeaconIdentityConstraint = .init(uuid: uuid, major: major, minor: minor)
         
-        let beaconRegion: CLBeaconRegion = .init(uuid: uuid, identifier: "MyBeacon")
         let beaconIdentityConstraint: CLBeaconIdentityConstraint = .init(uuid: uuid)
+        let beaconRegion: CLBeaconRegion = .init(beaconIdentityConstraint: beaconIdentityConstraint, identifier: "MyBeacon")
         
-        let anotherBeaconRegion: CLBeaconRegion = .init(uuid: anotherUUID, identifier: "YourBeacon")
         let anotherBeaconIdentityConstraint: CLBeaconIdentityConstraint = .init(uuid: anotherUUID)
+        let anotherBeaconRegion: CLBeaconRegion = .init(beaconIdentityConstraint: anotherBeaconIdentityConstraint, identifier: "YourBeacon")
+        
+        self.beaconRegions = [beaconRegion, anotherBeaconRegion]
         
         self.locationManger?.startMonitoring(for: beaconRegion)
-        self.locationManger?.startRangingBeacons(satisfying: beaconIdentityConstraint)
+//        self.locationManger?.startRangingBeacons(satisfying: beaconIdentityConstraint)
         
         self.locationManger?.startMonitoring(for: anotherBeaconRegion)
-        self.locationManger?.startRangingBeacons(satisfying: anotherBeaconIdentityConstraint)
+//        self.locationManger?.startRangingBeacons(satisfying: anotherBeaconIdentityConstraint)
     }
     
     func updateAUI(with beacon: CLBeacon) {
