@@ -46,13 +46,10 @@ extension ViewController: CLLocationManagerDelegate {
         case .notDetermined, .restricted, .denied:
             break
 
-        case .authorizedAlways:
+        case .authorizedWhenInUse, .authorizedAlways:
             guard CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self), CLLocationManager.isRangingAvailable() else { break }
             
-            self.startScanning()
-            
-        case .authorizedWhenInUse:
-            break
+            self.startMonitoring()
             
         @unknown default:
             break
@@ -174,13 +171,8 @@ private extension ViewController {
         
     }
     
-    func startScanning() {
+    func startMonitoring() {
         guard let uuid: UUID = .init(uuidString: "fda50693-a4e2-4fb1-afcf-c6eb07647825"), let anotherUUID: UUID = .init(uuidString: "fda50693-a4e2-4fb1-afcf-c6eb07647824") else { return }
-//        let major: UInt16 = 10004
-//        let minor: UInt16 = 54480
-//
-//        let beaconRegion: CLBeaconRegion = .init(uuid: uuid, major: major, minor: minor, identifier: "MyBeacon")
-//        let beaconIdentityConstraint: CLBeaconIdentityConstraint = .init(uuid: uuid, major: major, minor: minor)
         
         let beaconIdentityConstraint: CLBeaconIdentityConstraint = .init(uuid: uuid)
         let beaconRegion: CLBeaconRegion = .init(beaconIdentityConstraint: beaconIdentityConstraint, identifier: "MyBeacon")
@@ -191,10 +183,7 @@ private extension ViewController {
         self.beaconRegions = [beaconRegion, anotherBeaconRegion]
         
         self.locationManger?.startMonitoring(for: beaconRegion)
-//        self.locationManger?.startRangingBeacons(satisfying: beaconIdentityConstraint)
-        
         self.locationManger?.startMonitoring(for: anotherBeaconRegion)
-//        self.locationManger?.startRangingBeacons(satisfying: anotherBeaconIdentityConstraint)
     }
     
     func updateAUI(with beacon: CLBeacon) {
