@@ -13,6 +13,8 @@
 		D2D5580D2980E7CB0012A014 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2D5580B2980E7CB0012A014 /* Main.storyboard */; };
 		D2D5580F2980E7CC0012A014 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2D5580E2980E7CC0012A014 /* Assets.xcassets */; };
 		D2D558122980E7CC0012A014 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2D558102980E7CC0012A014 /* LaunchScreen.storyboard */; };
+		D2E239EF29875432001F62AE /* GPSSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2E239EE29875432001F62AE /* GPSSB.storyboard */; };
+		D2E239F129875441001F62AE /* GPSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E239F029875441001F62AE /* GPSViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		D2D5580E2980E7CC0012A014 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D2D558112980E7CC0012A014 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D2D558132980E7CC0012A014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2E239EE29875432001F62AE /* GPSSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GPSSB.storyboard; sourceTree = "<group>"; };
+		D2E239F029875441001F62AE /* GPSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +62,31 @@
 			children = (
 				D2D558052980E7CB0012A014 /* AppDelegate.swift */,
 				D2D558072980E7CB0012A014 /* SceneDelegate.swift */,
-				D2D558092980E7CB0012A014 /* ViewController.swift */,
-				D2D5580B2980E7CB0012A014 /* Main.storyboard */,
+				D2E239ED29875415001F62AE /* GPS */,
+				D2E239EC29875406001F62AE /* Beacon */,
 				D2D5580E2980E7CC0012A014 /* Assets.xcassets */,
 				D2D558102980E7CC0012A014 /* LaunchScreen.storyboard */,
 				D2D558132980E7CC0012A014 /* Info.plist */,
 			);
 			path = BeaconConnect;
+			sourceTree = "<group>";
+		};
+		D2E239EC29875406001F62AE /* Beacon */ = {
+			isa = PBXGroup;
+			children = (
+				D2D558092980E7CB0012A014 /* ViewController.swift */,
+				D2D5580B2980E7CB0012A014 /* Main.storyboard */,
+			);
+			path = Beacon;
+			sourceTree = "<group>";
+		};
+		D2E239ED29875415001F62AE /* GPS */ = {
+			isa = PBXGroup;
+			children = (
+				D2E239EE29875432001F62AE /* GPSSB.storyboard */,
+				D2E239F029875441001F62AE /* GPSViewController.swift */,
+			);
+			path = GPS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,6 +149,7 @@
 			files = (
 				D2D558122980E7CC0012A014 /* LaunchScreen.storyboard in Resources */,
 				D2D5580F2980E7CC0012A014 /* Assets.xcassets in Resources */,
+				D2E239EF29875432001F62AE /* GPSSB.storyboard in Resources */,
 				D2D5580D2980E7CB0012A014 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +164,7 @@
 				D2D5580A2980E7CB0012A014 /* ViewController.swift in Sources */,
 				D2D558062980E7CB0012A014 /* AppDelegate.swift in Sources */,
 				D2D558082980E7CB0012A014 /* SceneDelegate.swift in Sources */,
+				D2E239F129875441001F62AE /* GPSViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
